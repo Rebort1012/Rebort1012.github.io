@@ -1,0 +1,277 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>GameFramework食用指南 | Little Perilla</title><meta name="keywords" content="GameFramework"><meta name="author" content="Little Perilla"><meta name="copyright" content="Little Perilla"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="框架简介GF框架分两部分，GameFramework(GF)和UnityGameFramework(UGF)； 通过接口的形式对Unity引擎进行了解耦； GF独立于Unity，具体业务逻辑实现都在GF中； UGF是继承了MonoBehaviour的组件，通过接口调用GF中Module的方法； 框架流程 左边GF层，由GameFrameworkEntry管理所有GameFrameworkModul">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GameFramework食用指南">
+<meta property="og:url" content="https://rebort1012.github.io/2022/07/01/GF%E9%A3%9F%E7%94%A8%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name" content="Little Perilla">
+<meta property="og:description" content="框架简介GF框架分两部分，GameFramework(GF)和UnityGameFramework(UGF)； 通过接口的形式对Unity引擎进行了解耦； GF独立于Unity，具体业务逻辑实现都在GF中； UGF是继承了MonoBehaviour的组件，通过接口调用GF中Module的方法； 框架流程 左边GF层，由GameFrameworkEntry管理所有GameFrameworkModul">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picsheet.oss-cn-hangzhou.aliyuncs.com/202208041117631.jpg">
+<meta property="article:published_time" content="2022-07-01T08:35:48.000Z">
+<meta property="article:modified_time" content="2023-02-21T04:33:38.332Z">
+<meta property="article:author" content="Little Perilla">
+<meta property="article:tag" content="GameFramework">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picsheet.oss-cn-hangzhou.aliyuncs.com/202208041117631.jpg"><link rel="shortcut icon" href="https://picsheet.oss-cn-hangzhou.aliyuncs.com/202208041156928.png"><link rel="canonical" href="https://rebort1012.github.io/2022/07/01/GF%E9%A3%9F%E7%94%A8%E6%8C%87%E5%8D%97/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'GameFramework食用指南',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-02-21 12:33:38'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.2.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://picsheet.oss-cn-hangzhou.aliyuncs.com/202208041156929.png" onerror="onerror=null;src='https://picsheet.oss-cn-hangzhou.aliyuncs.com/202208041117631.jpg'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链接</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://picsheet.oss-cn-hangzhou.aliyuncs.com/202208041117631.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Little Perilla</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链接</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">GameFramework食用指南</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-07-01T08:35:48.000Z" title="发表于 2022-07-01 16:35:48">2022-07-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-02-21T04:33:38.332Z" title="更新于 2023-02-21 12:33:38">2023-02-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Unity/">Unity</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="GameFramework食用指南"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="框架简介"><a href="#框架简介" class="headerlink" title="框架简介"></a>框架简介</h2><p>GF框架分两部分，GameFramework(GF)和UnityGameFramework(UGF)；</p>
+<p>通过接口的形式对Unity引擎进行了解耦；</p>
+<p>GF独立于Unity，具体业务逻辑实现都在GF中；</p>
+<p>UGF是继承了MonoBehaviour的组件，通过接口调用GF中Module的方法；</p>
+<h3 id="框架流程"><a href="#框架流程" class="headerlink" title="框架流程"></a>框架流程</h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://raw.githubusercontent.com/Rebort1012/picgo/main/image-20220623115830791.png" alt="image-20220623115830791"></p>
+<p>左边GF层，由GameFrameworkEntry管理所有GameFrameworkModule；(使用GF自己实现的链表非list)</p>
+<p>Update阶段根据每个Module的Priority顺序轮询执行所有Module的Update；</p>
+<p>GameFrameworkEntry对外提供获取单个Module的方法；</p>
+<p>右边UGF层，UGF中所有Component都继承GameFrameworkComponent；</p>
+<p>GameFrameworkComponent做两件事：</p>
+<ul>
+<li>继承MonoBehaviour，未每个组件提供UnityComponent的生命周期；</li>
+<li>Awake方法中注册该UGF组件，将所有UGF组件存储在UGF层的GameEntry类中；</li>
+</ul>
+<p>UGF中的BaseComponent，Awake阶段做Text，Log，版本，json辅助器的初始化；</p>
+<p>Update阶段调用GF层的GameFrameworkEntry的Update方法，轮询实行所有GF层Module的Update；</p>
+<p>BaseComponent还提供推出程序，重启暂停游戏的方法；</p>
+<p>UGF层的GameEntry：</p>
+<p>上文提到，所有的UGF组件都继承GameFrameworkComponent；</p>
+<p>GameFrameworkComponent的Awake阶段调用GameEntry的RegisterComponent方法，存储UGF组件；</p>
+<p>E大官方文档建议，在实际游戏开发阶段，对UGF的GameEntry再做一层封装——业务层的GameEntry；</p>
+<p>将所有用到的UGF组件创建静态只可get的属性，只有业务逻辑中只需要通过业务层GameEntry中的静态属性来获取UGF组件；(官方Starforce命名空间下的GameEntry)</p>
+<h3 id="接口解耦"><a href="#接口解耦" class="headerlink" title="接口解耦"></a>接口解耦</h3><p>GFModule继承对应Module的接口，实现具体方法；</p>
+<p>UGF组合对应组件接口，Awake阶段对接口初始化，通过接口调用GF方法；</p>
+<p>以ConfigComponent为例：</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://raw.githubusercontent.com/Rebort1012/picgo/main/image-20220623122916991.png" alt="image-20220623122916991"></p>
+<p>ConfigManager实现IConfigManager接口方法；</p>
+<p>ConfigComponent组合IConfigManager变量，在Awake阶段用GF层的ConfigManagerModule初始化；</p>
+<h2 id="资源管理"><a href="#资源管理" class="headerlink" title="资源管理"></a>资源管理</h2><p>GF框架的资源管理非常强大，集成了VFS系统效率高，编辑器拓展管理打包资源清晰明了；</p>
+<p>Package单机模式：无法热更；</p>
+<p>Updatable可更新模式：游戏开始前更新完进入游戏；</p>
+<p>Updatable while playing可更新分包加载：游戏运行时需要使用资源时即时下载；</p>
+<p>Config下ResourceBuilder.xml存储了打包界面的设置信息；</p>
+<p>ResourceEditor.xml设置了ResourceEditor界面中可被打包的资源格式，过滤所有脚本，同时设置了资源编辑界面的搜索路径；</p>
+<p>ResourceCollection.xml记录了所有ab包，以及资源依赖；</p>
+<p>界面操作GF的官方文档写的非常详细，这里介绍一下资源热更流程；</p>
+<h3 id="热更流程"><a href="#热更流程" class="headerlink" title="热更流程"></a>热更流程</h3><p>Resource节点选择Updatable，GameFramework节点关闭EditorResourceMode；</p>
+<p>ResourceBuilder打包勾选OutputFullPath；</p>
+<p>修改GameMian&#x2F;Configs&#x2F;BuildInfo.txt中CheckVersionUrl；</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://raw.githubusercontent.com/Rebort1012/picgo/main/image-20220623161924265.png" alt="image-20220623161924265"></p>
+<p>打包输出路径找到对应打包版本的BuildLog.txt，找出加密hash；</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://raw.githubusercontent.com/Rebort1012/picgo/main/image-20220623161204787.png" alt="image-20220623161204787"></p>
+<p>打包输出路径&#x2F;Full&#x2F;1_0_0(对应版本)下，创建version.txt，本地服务器也搭建在这个位置;</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line"><span class="attr">&quot;ForceUpdateGame&quot;</span><span class="punctuation">:</span> <span class="keyword">false</span><span class="punctuation">,</span>                                </span><br><span class="line"><span class="attr">&quot;LatestGameVersion&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1&quot;</span><span class="punctuation">,</span>                                </span><br><span class="line"><span class="attr">&quot;InternalGameVersion&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;InternalResourceVersion&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;UpdatePrefixUri&quot;</span><span class="punctuation">:</span> <span class="string">&quot;http://localhost:8888/Windows&quot;</span><span class="punctuation">,</span>        <span class="comment">//资源服务器地址</span></span><br><span class="line"><span class="attr">&quot;VersionListLength&quot;</span><span class="punctuation">:</span> <span class="number">3280</span><span class="punctuation">,</span>                                <span class="comment">//BuildLog中的加密hash</span></span><br><span class="line"><span class="attr">&quot;VersionListHashCode&quot;</span><span class="punctuation">:</span> <span class="number">-553090012</span><span class="punctuation">,</span>        </span><br><span class="line"><span class="attr">&quot;VersionListCompressedLength&quot;</span><span class="punctuation">:</span> <span class="number">1326</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;VersionListCompressedHashCode&quot;</span><span class="punctuation">:</span> <span class="number">1159160375</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;END_OF_JSON&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>更新时比对LatestGameVersion和InternalGameVersion，确定是否更新；</p>
+<p><strong>一定要删除本地缓存的persistantData路径下的文件；</strong></p>
+<h2 id="数据表"><a href="#数据表" class="headerlink" title="数据表"></a>数据表</h2><p>GF的DataTable默认excel复制下来的结构,像CSV但分隔符是&#x2F;t；</p>
+<p>直接用DataTable组件根据行数加载单条数据；</p>
+<p>支持bytes和json格式；</p>
+<p>Configs中DataTableCodeTemplate，用于生成C#类模板；</p>
+<p>怎么说呢，简单游戏够了，复杂点的还是加个导表工具或者魔改一下；</p>
+<p>DataTable也可以添加自定义数据解析；</p>
+<p>另外直接在txt中添加数据条总是莫名奇妙的格式错误，毕竟空格肉眼也区分不了；</p>
+<p>我改成<code>,</code> 分隔后，注释列又显得很多余；</p>
+<p>所以我根据GF的原理自己谁先了直接读Excel的DataTable，支持json和bytes；</p>
+<p>一键导出，且自动生成c#类，支持数组和枚举，支持excel公式；</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Rebort1012/DataTable">Excel导表工具</a></p>
+<h2 id="事件系统"><a href="#事件系统" class="headerlink" title="事件系统"></a>事件系统</h2><p>GF的事件系统是基于引用池的，每次回收前需要Clear数据，防止脏数据；</p>
+<h3 id="注册和取消注册"><a href="#注册和取消注册" class="headerlink" title="注册和取消注册"></a>注册和取消注册</h3><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GameEntry.Event.Subscribe(TestArgs.EventId, OnTest);</span><br><span class="line">GameEntry.Event.Unsubscribe(TestArgs.EventId, OnTest);</span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义事件类"><a href="#自定义事件类" class="headerlink" title="自定义事件类"></a>自定义事件类</h3><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TestArgs</span>：<span class="title">GameEventArgs</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">readonly</span> <span class="built_in">int</span> EventId = <span class="keyword">typeof</span>(ResourceVerifyStartEventArgs).GetHashCode();</span><br><span class="line"></span><br><span class="line">     <span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">int</span> Id</span><br><span class="line">    &#123;</span><br><span class="line">         <span class="keyword">get</span></span><br><span class="line">         &#123;</span><br><span class="line">             <span class="keyword">return</span> EventId;</span><br><span class="line">          &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Clear</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//以上部分是必须有的部分，以下属于自定义，事件需要传递的参数都可以写在下面，相应的Clear中需要清空</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="事件发送"><a href="#事件发送" class="headerlink" title="事件发送"></a>事件发送</h3><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GameEntry.Event.Fire(<span class="built_in">object</span> sender,<span class="keyword">new</span> TestArgs());</span><br></pre></td></tr></table></figure>
+
+<p>sender发送人，一般填this；</p>
+<p>第二参数，具体事件类，如果有参数，需要先赋值，个人喜欢写带参构造，也可以单独写Init函数；</p>
+<h3 id="事件响应"><a href="#事件响应" class="headerlink" title="事件响应"></a>事件响应</h3><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnTest</span>(<span class="params"><span class="built_in">object</span> sender, GameEventArgs e</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    TestArgs en = (TestArgs)e;</span><br><span class="line">    <span class="comment">//执行逻辑</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h2><p>GF框架使用流程控制来控制游戏阶段；</p>
+<p>流程控制组件是一个被固定了拥有者（ProcedureOwner）的状态机（FSM）；</p>
+<p>通过状态机来控制更新，加载，初始化等；</p>
+<p>这里的流程不指游戏中具体业务逻辑流程；</p>
+<p>StarForce中的流程控制；有问题打个断点总能看清楚的；</p>
+<p>切换场景GF时切换到changeScene流程卸载资源后加载新场景流程；</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://raw.githubusercontent.com/Rebort1012/picgo/main/StarForce%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6.png" alt="StarForce流程控制"></p>
+<h2 id="UI模块"><a href="#UI模块" class="headerlink" title="UI模块"></a>UI模块</h2><p>GF的UI分为UIGroup和UIForm；</p>
+<p>UIGroup中包含多个UIForm，由UIGroup管理其中的UIForm；</p>
+<p>UIForm的层级等于所属UIGroup层级自身层级（SortOrder）；</p>
+<p>UIGroup概念有点想UI中的默认层，Pop层，前景层，背景层，可自定义；</p>
+<p>在场景UI节点添加UIGroup；</p>
+<p>所有UI脚本必须继UGuiForm，UGuiForm继承UIFormLogic，UGuiForm中对所有Text做了本地化处理；</p>
+<p>UI生命周期：</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://raw.githubusercontent.com/Rebort1012/picgo/main/image-20220624145229743.png" alt="image-20220624145229743"></p>
+<p>UI的层级问题：</p>
+<p>每个UIGroup要求设置order层级；</p>
+<p>每个UIForm的层级最终是自身sortorder+所属group的order；</p>
+<p>在创建预制体时可设置好；</p>
+<h2 id="Entity模块"><a href="#Entity模块" class="headerlink" title="Entity模块"></a>Entity模块</h2><p>Entity个人理解相当于自己封装了一个MonoBehaviour类，但是还集成了Mono；</p>
+<p>同时有GF的生命周期+Mono的生命周期；</p>
+<p>Enity包括了GameObject的功能，由GF的EntityModule来控制Active；</p>
+<p>Entity也是基于对象池的，从框架层管理内存问题；</p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>逻辑控制类继承EntityLogic，重写其中生命周期的方法（别忘记base.）；</p>
+<p>显示Entity调用GameEntry.Entity.ShowEntity<T>(id,path,group);</p>
+<p>id在datatable中配置；</p>
+<p>path为datatable中配置的默认路径+AssetName；（ResourceEditor界面的path）</p>
+<p>Entity中提供了Attach方法；</p>
+<p>通过GameEntry.Entity.AttachEntity()调用，此时会调用父物体EntityLogic中OnAttached周期，和子物体OnAttachTo周期；</p>
+<p>解绑时调用OnDetached，OnDetachFrom；</p>
+<h3 id="Entity和EntityLogic"><a href="#Entity和EntityLogic" class="headerlink" title="Entity和EntityLogic"></a>Entity和EntityLogic</h3><p>预制体不需要绑EntityLogic脚本，ShowEntity时会自动绑上EntityLogic+Entiy脚本；</p>
+<p>这俩脚本相互引用，Entity的周期中都在调用EntiyLogic对应的周期函数；</p>
+<p>Entity继承自IEntity，被EntityComponent管理；</p>
+<p>小声比比：所以，这两个有一个就行，或者Entity其实不用继承Mono；</p>
+<p>具体操作时，只写EntityLogic脚本，不用管Entity；</p>
+<h2 id="FSM有限状态机"><a href="#FSM有限状态机" class="headerlink" title="FSM有限状态机"></a>FSM有限状态机</h2><p>GF的状态机都由FsmComponent管理（GameFrameworkComponent）；</p>
+<p>创建状态机时，需要状态机的Owner（泛型T），和FsmState数组；</p>
+<p>eg：Hero继承EntityLogic</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">ActBase&lt;Hero&gt;[] array = <span class="keyword">new</span> ActBase&lt;Hero&gt;[] &#123; <span class="keyword">new</span> IdleAct&lt;Hero&gt;(), <span class="keyword">new</span> RunAct&lt;Hero&gt;() &#125;;</span><br><span class="line">mFsm = GameEntry.Fsm.CreateFsm&lt;Hero&gt;(<span class="keyword">this</span>, array);</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">IdleAct</span>&lt;<span class="title">T</span>&gt;:<span class="title">ActBase</span>&lt;<span class="title">T</span>&gt; <span class="keyword">where</span> <span class="title">T</span> : <span class="title">Hero</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">OnInit</span>(<span class="params">IFsm&lt;T&gt; fsm</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">base</span>.OnInit(fsm);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">OnEnter</span>(<span class="params">IFsm&lt;T&gt; fsm</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">base</span>.OnEnter(fsm);</span><br><span class="line">        fsm.Owner.PlayCurAnima();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">OnUpdate</span>(<span class="params">IFsm&lt;T&gt; fsm, <span class="built_in">float</span> elapseSeconds, <span class="built_in">float</span> realElapseSeconds</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">base</span>.OnUpdate(fsm, elapseSeconds, realElapseSeconds);</span><br><span class="line">        <span class="keyword">if</span> (fsm.Owner.curState == ActState.Run)</span><br><span class="line">        &#123;</span><br><span class="line">            ChangeState&lt;RunAct&lt;T&gt;&gt;(fsm);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="本地化工具"><a href="#本地化工具" class="headerlink" title="本地化工具"></a>本地化工具</h2><p>GF的Localization存储的xml；</p>
+<p>UI的Init阶段遍历所有组件，获得所有Text组件，根据Text组件中的text加载本地化语言，同时设置对应字体；</p>
+<p>该语言&#x3D;重新加载游戏；</p>
+<p>这个组件简单但不够智能；</p>
+<p>个人添加了两个功能：</p>
+<ul>
+<li><p>根据TextMeshProGUI组件的Name和text内容自动添加简体中文多语言xml的key；</p>
+</li>
+<li><p>调用谷歌接口自动翻译，生成其他语言xml；</p>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://files.cnblogs.com/files/blogs/703006/LocalizationGenerator.css?t=1655977656">Localization.cs</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://rebort1012.github.io">Little Perilla</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://rebort1012.github.io/2022/07/01/GF%E9%A3%9F%E7%94%A8%E6%8C%87%E5%8D%97/">https://rebort1012.github.io/2022/07/01/GF食用指南/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://rebort1012.github.io" target="_blank">Little Perilla</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/GameFramework/">GameFramework</a></div><div class="post_share"><div class="social-share" data-image="https://picsheet.oss-cn-hangzhou.aliyuncs.com/202208041117631.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/gh/overtrue/share.js@master/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/07/16/Unity/Unity-%E5%83%8F%E7%B4%A0%E6%99%B6%E6%A0%BC%E5%8C%96%E6%B6%88%E8%9E%8D/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://picsheet.oss-cn-hangzhou.aliyuncs.com/202208041117631.jpg" onerror="onerror=null;src='https://picsheet.oss-cn-hangzhou.aliyuncs.com/202208041117631.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Unity-2D像素晶格化消融</div></div></a></div><div class="next-post pull-right"><a href="/2022/06/25/Unity/Unity-A-Star%E5%AF%BB%E8%B7%AF/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://picsheet.oss-cn-hangzhou.aliyuncs.com/202208041117631.jpg" onerror="onerror=null;src='https://picsheet.oss-cn-hangzhou.aliyuncs.com/202208041117631.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Unity-A-Star寻路</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/03/09/GameFramework%E5%AF%BC%E8%A1%A8%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" title="GameFramework导表工具使用"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://picsheet.oss-cn-hangzhou.aliyuncs.com/202208041117631.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-09</div><div class="title">GameFramework导表工具使用</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://picsheet.oss-cn-hangzhou.aliyuncs.com/202208041156929.png" onerror="this.onerror=null;this.src='https://picsheet.oss-cn-hangzhou.aliyuncs.com/202208041117631.jpg'" alt="avatar"/></div><div class="author-info__name">Little Perilla</div><div class="author-info__description">技术分享，学习记录</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Rebort1012"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Rebort1012" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:871899125@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">不定期摸鱼，躺平</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%86%E6%9E%B6%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">框架简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%86%E6%9E%B6%E6%B5%81%E7%A8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">框架流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E8%A7%A3%E8%80%A6"><span class="toc-number">1.2.</span> <span class="toc-text">接口解耦</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">资源管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%83%AD%E6%9B%B4%E6%B5%81%E7%A8%8B"><span class="toc-number">2.1.</span> <span class="toc-text">热更流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E8%A1%A8"><span class="toc-number">3.</span> <span class="toc-text">数据表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="toc-number">4.</span> <span class="toc-text">事件系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E5%86%8C%E5%92%8C%E5%8F%96%E6%B6%88%E6%B3%A8%E5%86%8C"><span class="toc-number">4.1.</span> <span class="toc-text">注册和取消注册</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6%E7%B1%BB"><span class="toc-number">4.2.</span> <span class="toc-text">自定义事件类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E5%8F%91%E9%80%81"><span class="toc-number">4.3.</span> <span class="toc-text">事件发送</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E5%93%8D%E5%BA%94"><span class="toc-number">4.4.</span> <span class="toc-text">事件响应</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6"><span class="toc-number">5.</span> <span class="toc-text">流程控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UI%E6%A8%A1%E5%9D%97"><span class="toc-number">6.</span> <span class="toc-text">UI模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Entity%E6%A8%A1%E5%9D%97"><span class="toc-number">7.</span> <span class="toc-text">Entity模块</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">7.1.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Entity%E5%92%8CEntityLogic"><span class="toc-number">7.2.</span> <span class="toc-text">Entity和EntityLogic</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FSM%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA"><span class="toc-number">8.</span> <span class="toc-text">FSM有限状态机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E5%8C%96%E5%B7%A5%E5%85%B7"><span class="toc-number">9.</span> <span class="toc-text">本地化工具</span></a></li></ol></div></div></div></div></main><footer id="footer" style="background: #121212"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2023 By Little Perilla</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Life is too short for so much sorrow,but love is actually all around.</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="little,love,sweet,perilla,skylar,louise" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
